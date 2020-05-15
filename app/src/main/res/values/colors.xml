@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="onyx_accent">#313638</color>
+
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">@color/onyx_accent</color>
+
+    <color name="textColorLight">#EEF0F2</color>
+    <color name="textColorPrimary">#212121</color>
+
+
+</resources>

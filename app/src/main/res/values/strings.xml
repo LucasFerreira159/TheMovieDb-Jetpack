@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TheMovieDB</string>
+
+    <string name="API_KEY">d0c5f9c37feef9d68695aac4e8519505</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
