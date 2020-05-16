@@ -9,6 +9,10 @@
         android:id="@+id/listFragment"
         android:name="com.app4funbr.themoviedb.view.fragments.ListMoviesFragment"
         android:label="FIlmes Populares"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
         tools:layout="@layout/fragment_list_movies">
         <action
             android:id="@+id/action_listFragment_to_movieDetailFragment"
@@ -29,12 +33,12 @@
         <argument
             android:name="movieUuid"
             android:defaultValue="0"
-            app:argType="integer"/>
+            app:argType="integer" />
 
         <argument
             android:name="title"
-            app:argType="string"
-            android:defaultValue="The Movie DB"/>
+            android:defaultValue="The Movie DB"
+            app:argType="string" />
 
     </fragment>
     <fragment

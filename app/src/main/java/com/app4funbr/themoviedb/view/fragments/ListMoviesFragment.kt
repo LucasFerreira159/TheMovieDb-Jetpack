@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.app4funbr.themoviedb.R
+import com.app4funbr.themoviedb.util.NavUtils
 import com.app4funbr.themoviedb.view.adapter.MoviesAdapter
 import com.app4funbr.themoviedb.viewmodel.ListMoviesViewModel
 import kotlinx.android.synthetic.main.fragment_list_movies.*
@@ -83,7 +84,10 @@ class ListMoviesFragment : Fragment() {
             R.id.action_settings -> {
                 view?.let {
                     Navigation.findNavController(it)
-                        .navigate(ListMoviesFragmentDirections.actionListFragmentToSettingsFragment())
+                        .navigate(
+                            ListMoviesFragmentDirections.actionListFragmentToSettingsFragment(),
+                            NavUtils.navOptions
+                        )
                 }
             }
         }

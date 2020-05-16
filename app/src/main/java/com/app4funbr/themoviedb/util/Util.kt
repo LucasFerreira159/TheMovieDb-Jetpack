@@ -3,6 +3,7 @@ package com.app4funbr.themoviedb.util
 import android.content.Context
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.navigation.NavOptions
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.app4funbr.themoviedb.R
 import com.bumptech.glide.Glide
