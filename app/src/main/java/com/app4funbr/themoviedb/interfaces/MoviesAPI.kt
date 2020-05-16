@@ -7,6 +7,6 @@ import retrofit2.http.GET
 
 interface MoviesAPI {
 
-    @GET("movie/popular?api_key=${Constants.API_KEY}")
+    @GET("movie/popular?api_key=${Constants.API_KEY}&language=pt-BR")
     fun getPopularMovies(): Single<PaginatedResponse>
 }
