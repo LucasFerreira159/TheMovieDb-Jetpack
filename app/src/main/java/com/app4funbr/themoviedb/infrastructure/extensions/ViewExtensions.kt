@@ -1,11 +1,11 @@
-package com.app4funbr.themoviedb.util
+package com.app4funbr.themoviedb.infrastructure.extensions
 
 import android.content.Context
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import androidx.navigation.NavOptions
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.app4funbr.themoviedb.R
+import com.app4funbr.themoviedb.infrastructure.util.Constants
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 

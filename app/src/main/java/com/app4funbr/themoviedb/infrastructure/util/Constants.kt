@@ -1,4 +1,4 @@
-package com.app4funbr.themoviedb.util
+package com.app4funbr.themoviedb.infrastructure.util
 
 object Constants {
     const val BASE_URL = "https://api.themoviedb.org/"

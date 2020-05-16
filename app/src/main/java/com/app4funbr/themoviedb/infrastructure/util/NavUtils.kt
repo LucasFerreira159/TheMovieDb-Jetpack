@@ -1,4 +1,4 @@
-package com.app4funbr.themoviedb.util
+package com.app4funbr.themoviedb.infrastructure.util
 
 import androidx.navigation.NavOptions
 import com.app4funbr.themoviedb.R

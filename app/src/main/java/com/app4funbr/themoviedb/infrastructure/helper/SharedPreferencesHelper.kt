@@ -1,4 +1,4 @@
-package com.app4funbr.themoviedb.util
+package com.app4funbr.themoviedb.infrastructure.helper
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -16,8 +16,12 @@ class SharedPreferencesHelper {
         private val LOCK = Any()
 
         operator fun invoke(context: Context): SharedPreferencesHelper =
-            instance ?: synchronized(LOCK) {
-                instance ?: buildHelper(context).also {
+            instance
+                ?: synchronized(LOCK) {
+                instance
+                    ?: buildHelper(
+                        context
+                    ).also {
                     instance = it
                 }
             }
@@ -34,7 +38,8 @@ class SharedPreferencesHelper {
         }
     }
 
-    fun getUpdateTime() = prefs?.getLong(PREF_TIME, 0)
+    fun getUpdateTime() = prefs?.getLong(
+        PREF_TIME, 0)
 
     fun getCacheDuration() = prefs?.getString("pref_cache_duration", "")
 }

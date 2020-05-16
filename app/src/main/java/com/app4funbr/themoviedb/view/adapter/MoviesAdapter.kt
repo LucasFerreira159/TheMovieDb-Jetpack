@@ -10,7 +10,7 @@ import com.app4funbr.themoviedb.R
 import com.app4funbr.themoviedb.databinding.ItemMovieBinding
 import com.app4funbr.themoviedb.interfaces.ClickListener
 import com.app4funbr.themoviedb.model.Movie
-import com.app4funbr.themoviedb.util.NavUtils.navOptions
+import com.app4funbr.themoviedb.infrastructure.util.NavUtils.navOptions
 import com.app4funbr.themoviedb.view.fragments.ListMoviesFragmentDirections
 import kotlinx.android.synthetic.main.item_movie.view.*
 

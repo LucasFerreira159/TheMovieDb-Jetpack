@@ -9,7 +9,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.app4funbr.themoviedb.R
-import com.app4funbr.themoviedb.util.NavUtils
+import com.app4funbr.themoviedb.infrastructure.util.NavUtils
 import com.app4funbr.themoviedb.view.adapter.MoviesAdapter
 import com.app4funbr.themoviedb.viewmodel.ListMoviesViewModel
 import kotlinx.android.synthetic.main.fragment_list_movies.*

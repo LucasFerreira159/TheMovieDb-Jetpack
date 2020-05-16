@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.app4funbr.themoviedb.ServiceAPI
 import com.app4funbr.themoviedb.model.Movie
 import com.app4funbr.themoviedb.model.PaginatedResponse
-import com.app4funbr.themoviedb.util.MovieDatabase
-import com.app4funbr.themoviedb.util.SharedPreferencesHelper
+import com.app4funbr.themoviedb.infrastructure.helper.MovieDatabase
+import com.app4funbr.themoviedb.infrastructure.helper.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -17,7 +17,10 @@ import java.lang.NumberFormatException
 
 class ListMoviesViewModel(application: Application): BaseViewModel(application) {
 
-    private var prefHelper = SharedPreferencesHelper(getApplication())
+    private var prefHelper =
+        SharedPreferencesHelper(
+            getApplication()
+        )
     //5 minutos em nanosegundos
     private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
 
@@ -84,7 +87,9 @@ class ListMoviesViewModel(application: Application): BaseViewModel(application) 
     private fun fetchFromDatabase() {
         loading.value = true
         launch {
-            val movies = MovieDatabase(getApplication()).moviesDao().getAllMovies()
+            val movies = MovieDatabase(
+                getApplication()
+            ).moviesDao().getAllMovies()
             moviesRetrieved(movies)
             Toast.makeText(
                 getApplication(),
@@ -102,7 +107,9 @@ class ListMoviesViewModel(application: Application): BaseViewModel(application) 
 
     private fun storeMoviesLocally(list: MutableList<Movie>) {
         launch {
-            val dao = MovieDatabase(getApplication()).moviesDao()
+            val dao = MovieDatabase(
+                getApplication()
+            ).moviesDao()
             dao.deleteAllMovies()
             val result = dao.insertAll(*list.toTypedArray())
             var i = 0
