@@ -7,7 +7,7 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:inputType="number"
-        app:title="Duração do cacache em minutos"
+        app:title="Duração do cache em segundos"
         android:key="pref_cache_duration"/>
 
 </PreferenceScreen>

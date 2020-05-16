@@ -1,12 +1,18 @@
 package com.app4funbr.themoviedb.view.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
+import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.app4funbr.themoviedb.R
 import com.app4funbr.themoviedb.infrastructure.util.NavUtils
@@ -18,6 +24,13 @@ class ListMoviesFragment : Fragment() {
 
     private lateinit var viewModel: ListMoviesViewModel
     private val moviesAdapter = MoviesAdapter(arrayListOf())
+    private lateinit var manager: GridLayoutManager
+    private var isScrolling = false
+
+    private var page = 1
+    private var currentItems: Int = 0
+    private var totalItems: Int = 0
+    private var scrollOutItems = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,9 +46,34 @@ class ListMoviesFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(ListMoviesViewModel::class.java)
         viewModel.refresh()
 
+        val resId = R.anim.grid_layout_animation_from_bottom
+        val animation = AnimationUtils.loadLayoutAnimation(requireContext(), resId)
+
         recycler_movies?.apply {
-            layoutManager = GridLayoutManager(requireContext(), 3)
+            layoutAnimation = animation
+            manager = GridLayoutManager(requireContext(), 3)
+            layoutManager = manager
             adapter = moviesAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                        isScrolling = true
+                    }
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    currentItems = manager.childCount
+                    totalItems = manager.itemCount
+                    scrollOutItems = manager.findFirstVisibleItemPosition()
+
+                    if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
+                        page++
+                        viewModel.fetchOtherPagesFromRemote(page)
+                    }
+                }
+            })
         }
 
         refresh_layout?.setOnRefreshListener {
@@ -92,5 +130,19 @@ class ListMoviesFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun runAnimation() {
+        val context = recycler_movies?.context
+        val controller = AnimationUtils.loadLayoutAnimation(
+            requireContext(),
+            R.anim.grid_layout_animation_from_bottom
+        )
+
+        recycler_movies?.apply {
+            layoutAnimation = controller
+            adapter?.notifyDataSetChanged()
+            scheduleLayoutAnimation()
+        }
     }
 }

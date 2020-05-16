@@ -12,6 +12,10 @@ data class Movie(
     @SerializedName("id")
     val id: Int,
 
+    @ColumnInfo(name = "total_pages")
+    @SerializedName("total_pages")
+    val totalPages: Int,
+
     @ColumnInfo(name = "popularity")
     @SerializedName("popularity")
     val popularity: Double,
@@ -26,11 +30,11 @@ data class Movie(
 
     @ColumnInfo(name = "poster_path")
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String? = null,
 
     @ColumnInfo(name = "backdrop_path")
     @SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String? = null,
 
     @ColumnInfo(name = "original_title")
     @SerializedName("original_title")

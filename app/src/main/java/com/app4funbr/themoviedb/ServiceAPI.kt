@@ -18,7 +18,7 @@ class ServiceAPI {
         .build()
         .create(MoviesAPI::class.java)
 
-    fun getPopularMovies(): Single<PaginatedResponse> {
-        return api.getPopularMovies()
+    fun getPopularMovies(page: Int? = null): Single<PaginatedResponse> {
+        return api.getPopularMovies(page)
     }
 }

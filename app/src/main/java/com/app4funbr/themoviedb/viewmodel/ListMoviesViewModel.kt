@@ -4,6 +4,7 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.app4funbr.themoviedb.ServiceAPI
+import com.app4funbr.themoviedb.infrastructure.extensions.notifyObserver
 import com.app4funbr.themoviedb.model.Movie
 import com.app4funbr.themoviedb.model.PaginatedResponse
 import com.app4funbr.themoviedb.infrastructure.helper.MovieDatabase
@@ -15,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 import java.lang.NumberFormatException
 
-class ListMoviesViewModel(application: Application): BaseViewModel(application) {
+class ListMoviesViewModel(application: Application) : BaseViewModel(application) {
 
     private var prefHelper =
         SharedPreferencesHelper(
@@ -32,6 +33,7 @@ class ListMoviesViewModel(application: Application): BaseViewModel(application) 
     val loadError = MutableLiveData<Boolean>()
 
     fun refresh() {
+        loading.value = true
         checkCacheDuration()
         val updateTime = prefHelper.getUpdateTime()
         if (updateTime != null &&
@@ -62,10 +64,10 @@ class ListMoviesViewModel(application: Application): BaseViewModel(application) 
     private fun fetchFromRemote() {
         loading.value = true
         disposable.add(
-            serviceAPI.getPopularMovies()
+            serviceAPI.getPopularMovies(null)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<PaginatedResponse>(){
+                .subscribeWith(object : DisposableSingleObserver<PaginatedResponse>() {
                     override fun onSuccess(t: PaginatedResponse) {
                         storeMoviesLocally(t.results)
                         loading.value = false
@@ -91,11 +93,6 @@ class ListMoviesViewModel(application: Application): BaseViewModel(application) 
                 getApplication()
             ).moviesDao().getAllMovies()
             moviesRetrieved(movies)
-            Toast.makeText(
-                getApplication(),
-                "Recuperando informações do database",
-                Toast.LENGTH_SHORT
-            ).show()
         }
     }
 
@@ -118,6 +115,42 @@ class ListMoviesViewModel(application: Application): BaseViewModel(application) 
                 ++i
             }
             moviesRetrieved(list)
+        }
+        prefHelper.saveUpdateTime(System.nanoTime())
+    }
+
+    fun fetchOtherPagesFromRemote(page: Int? = null) {
+        disposable.add(
+            serviceAPI.getPopularMovies(page)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<PaginatedResponse>() {
+                    override fun onSuccess(t: PaginatedResponse) {
+                        storeOtherPagesLocally(t.results)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loadError.value = true
+                        loading.value = false
+                    }
+                })
+        )
+    }
+
+    private fun storeOtherPagesLocally(list: MutableList<Movie>) {
+        launch {
+            val dao = MovieDatabase(
+                getApplication()
+            ).moviesDao()
+            val result = dao.insertAll(*list.toTypedArray())
+            var i = 0
+            while (i < list.size) {
+                list[i].uuid = result[i].toInt()
+                ++i
+            }
+
+            movies.value?.addAll(list)
+            movies.notifyObserver()
         }
         prefHelper.saveUpdateTime(System.nanoTime())
     }
