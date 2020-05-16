@@ -4,11 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.app4funbr.themoviedb.R
 import com.app4funbr.themoviedb.databinding.ItemMovieBinding
 import com.app4funbr.themoviedb.interfaces.ClickListener
 import com.app4funbr.themoviedb.model.Movie
+import com.app4funbr.themoviedb.view.fragments.ListMoviesFragmentDirections
+import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MoviesAdapter(private val movieList: ArrayList<Movie>) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>(),
@@ -21,7 +24,12 @@ class MoviesAdapter(private val movieList: ArrayList<Movie>) :
     }
 
     override fun onClickListener(v: View) {
-
+        val uuid = v.movieId.text.toString().toInt()
+        val title = v.text_title.toString()
+        val action = ListMoviesFragmentDirections.actionListFragmentToMovieDetailFragment()
+        action.movieUuid = uuid
+        action.title = title
+        Navigation.findNavController(v).navigate(action)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +40,7 @@ class MoviesAdapter(private val movieList: ArrayList<Movie>) :
     }
 
     override fun getItemCount(): Int {
-       return movieList.size
+        return movieList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

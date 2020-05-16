@@ -9,6 +9,7 @@
 
     <color name="textColorLight">#EEF0F2</color>
     <color name="textColorPrimary">#212121</color>
+    <color name="gray_background">#e4e4e4</color>
 
 
 </resources>

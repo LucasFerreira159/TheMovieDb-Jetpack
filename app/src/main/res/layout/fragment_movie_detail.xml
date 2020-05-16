@@ -1,14 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.fragments.MovieDetailFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <variable
+            name="movie"
+            type="com.app4funbr.themoviedb.model.Movie" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                <ImageView
+                    android:id="@+id/image_backdrop_detalhe"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:imageUrlBackdrop="@{movie.backdropPath}"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="207dp" />
+
+                <ImageView
+                    android:id="@+id/image_poster_detalhe"
+                    android:layout_width="110dp"
+                    android:layout_height="170dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:imageUrlBackdrop="@{movie.posterPath}"
+                    android:transitionName="simple_activity_transition"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+                <TextView
+                    android:id="@+id/text_title_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@{movie.title}"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_poster_detalhe"
+                    app:layout_constraintTop_toBottomOf="@+id/image_backdrop_detalhe" />
+
+                <TextView
+                    android:id="@+id/text_genere_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="Genero"
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_poster_detalhe"
+                    app:layout_constraintTop_toBottomOf="@+id/text_title_detail" />
+
+                <ImageView
+                    android:id="@+id/image_icon_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="TODO"
+                    app:layout_constraintStart_toEndOf="@+id/image_poster_detalhe"
+                    app:layout_constraintTop_toBottomOf="@+id/text_genere_detail"
+                    android:src="@drawable/ic_star"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <TextView
+                    android:id="@+id/text_range_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="11dp"
+                    android:text="@{String.valueOf(movie.voteAverage)}"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@+id/image_icon_star"
+                    app:layout_constraintTop_toBottomOf="@+id/text_genere_detail" />
+
+
+                <TextView
+                    android:id="@+id/label_overview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="Resumo"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/image_poster_detalhe" />
+
+                <TextView
+                    android:id="@+id/text_overview_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@{movie.overview}"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/label_overview" />
+
+                <!-- <TextView
+                     android:id="@+id/label_release"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="16dp"
+                     android:layout_marginLeft="16dp"
+                     android:layout_marginTop="16dp"
+                     android:text="@string/label_lancamento"
+                     android:textSize="14sp"
+                     android:textStyle="bold"
+                     android:visibility="invisible"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/text_overview_detail" />
+
+                 <TextView
+                     android:id="@+id/text_release_datail"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="16dp"
+                     android:layout_marginEnd="16dp"
+                     android:layout_marginRight="16dp"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/text_overview_detail" />
+
+                 <TextView
+                     android:id="@+id/label_time"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="16dp"
+                     android:layout_marginLeft="16dp"
+                     android:layout_marginTop="8dp"
+                     android:text="@string/label_time"
+                     android:textSize="14sp"
+                     android:textStyle="bold"
+                     android:visibility="invisible"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/label_release" />
+
+                 <TextView
+                     android:id="@+id/text_runtime_detail"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="8dp"
+                     android:layout_marginEnd="16dp"
+                     android:layout_marginRight="16dp"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/text_release_datail" />
+
+                 <TextView
+                     android:id="@+id/label_orcamento"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="16dp"
+                     android:layout_marginLeft="16dp"
+                     android:layout_marginTop="8dp"
+                     android:text="@string/label_orcamento"
+                     android:textSize="14sp"
+                     android:textStyle="bold"
+                     android:visibility="invisible"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/label_time" />
+
+                 <TextView
+                     android:id="@+id/text_orcamento_detail"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="8dp"
+                     android:layout_marginEnd="16dp"
+                     android:layout_marginRight="16dp"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/text_runtime_detail" />
+
+                 <TextView
+                     android:id="@+id/label_receita"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginStart="16dp"
+                     android:layout_marginLeft="16dp"
+                     android:layout_marginTop="8dp"
+                     android:layout_marginBottom="16dp"
+                     android:text="@string/label_receita"
+                     android:textSize="14sp"
+                     android:textStyle="bold"
+                     android:visibility="invisible"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/label_orcamento" />
+
+                 <TextView
+                     android:id="@+id/text_receita_detail"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="8dp"
+                     android:layout_marginEnd="16dp"
+                     android:layout_marginRight="16dp"
+                     android:layout_marginBottom="16dp"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/text_orcamento_detail" /> -->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>

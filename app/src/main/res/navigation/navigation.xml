@@ -9,7 +9,7 @@
         android:id="@+id/listFragment"
         android:name="com.app4funbr.themoviedb.view.fragments.ListMoviesFragment"
         android:label="FIlmes Populares"
-        tools:layout="@layout/fragment_list_movies" >
+        tools:layout="@layout/fragment_list_movies">
         <action
             android:id="@+id/action_listFragment_to_movieDetailFragment"
             app:destination="@id/movieDetail" />
@@ -20,8 +20,23 @@
     <fragment
         android:id="@+id/movieDetail"
         android:name="com.app4funbr.themoviedb.view.fragments.MovieDetailFragment"
-        android:label="fragment_movie_detail"
-        tools:layout="@layout/fragment_movie_detail" />
+        tools:layout="@layout/fragment_movie_detail">
+
+        <action
+            android:id="@+id/actionListFragment"
+            app:destination="@id/listFragment" />
+
+        <argument
+            android:name="movieUuid"
+            android:defaultValue="0"
+            app:argType="integer"/>
+
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="The Movie DB"/>
+
+    </fragment>
     <fragment
         android:id="@+id/actionSettings"
         android:name="com.app4funbr.themoviedb.view.fragments.SettingsFragment"

@@ -1,7 +1,7 @@
 package com.app4funbr.themoviedb.model.enum
 
 enum class Genre (val genre: Int){
-   /* Acao(28),
+    Acao(28),
     Aventura(12),
     Comedia(35),
     Crime(80),
@@ -18,5 +18,5 @@ enum class Genre (val genre: Int){
     CinemaTV(10770),
     Thriller(53),
     Guerra(10752),
-    Faroeste(37)*/
+    Faroeste(37)
 }
