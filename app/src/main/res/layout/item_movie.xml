@@ -55,7 +55,7 @@
                 android:padding="12dp"
                 android:maxLines="1"
                 android:text="@{movie.title}"
-                android:textAppearance="@style/Text.Light.Medium"
+                android:textAppearance="@style/Text.Dark.Medium"
                 tools:text="Nome do Filme" />
 
 
