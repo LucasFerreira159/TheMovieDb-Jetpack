@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app4funbr.themoviedb.R
 import com.app4funbr.themoviedb.databinding.ItemMovieBinding
 import com.app4funbr.themoviedb.interfaces.ClickListener
-import com.app4funbr.themoviedb.model.MovieList
+import com.app4funbr.themoviedb.model.Movie
 
-class MoviesAdapter(private val movieList: ArrayList<MovieList>) :
+class MoviesAdapter(private val movieList: ArrayList<Movie>) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>(),
     ClickListener {
 
-    fun updateMovieList(newMovieList: List<MovieList>) {
+    fun updateMovieList(newMovieList: List<Movie>) {
         movieList.clear()
         movieList.addAll(newMovieList)
         notifyDataSetChanged()

@@ -7,7 +7,7 @@
 
         <variable
             name="movie"
-            type="com.app4funbr.themoviedb.model.MovieList" />
+            type="com.app4funbr.themoviedb.model.Movie" />
 
         <variable
             name="listener"

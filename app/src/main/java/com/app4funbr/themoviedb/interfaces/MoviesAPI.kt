@@ -1,12 +1,12 @@
 package com.app4funbr.themoviedb.interfaces
 
 import com.app4funbr.themoviedb.model.PaginatedResponse
+import com.app4funbr.themoviedb.util.Constants
 import io.reactivex.Single
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface MoviesAPI {
 
-    @GET("movie/popular")
-    fun getPopularMovies(@Query("api_key") key: String): Single<PaginatedResponse>
+    @GET("movie/popular?api_key=${Constants.API_KEY}")
+    fun getPopularMovies(): Single<PaginatedResponse>
 }

@@ -15,5 +15,5 @@ data class PaginatedResponse (
     val totalPages: String?,
     @Expose
     @SerializedName("results")
-    val results: MutableList<MovieList>
+    val results: MutableList<Movie>
 )

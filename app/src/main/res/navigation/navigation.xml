@@ -9,5 +9,21 @@
         android:id="@+id/listFragment"
         android:name="com.app4funbr.themoviedb.view.fragments.ListMoviesFragment"
         android:label="FIlmes Populares"
-        tools:layout="@layout/fragment_list_movies" />
+        tools:layout="@layout/fragment_list_movies" >
+        <action
+            android:id="@+id/action_listFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetail" />
+        <action
+            android:id="@+id/action_listFragment_to_settingsFragment"
+            app:destination="@id/actionSettings" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetail"
+        android:name="com.app4funbr.themoviedb.view.fragments.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" />
+    <fragment
+        android:id="@+id/actionSettings"
+        android:name="com.app4funbr.themoviedb.view.fragments.SettingsFragment"
+        android:label="Configurações" />
 </navigation>
