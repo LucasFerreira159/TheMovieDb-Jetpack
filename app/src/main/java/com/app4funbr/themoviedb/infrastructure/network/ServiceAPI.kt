@@ -1,7 +1,8 @@
-package com.app4funbr.themoviedb
+package com.app4funbr.themoviedb.infrastructure.network
 
 import com.app4funbr.themoviedb.interfaces.MoviesAPI
 import com.app4funbr.themoviedb.model.PaginatedResponse
+import com.app4funbr.themoviedb.model.VideoResponse
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -20,5 +21,9 @@ class ServiceAPI {
 
     fun getPopularMovies(page: Int? = null): Single<PaginatedResponse> {
         return api.getPopularMovies(page)
+    }
+
+    fun getMovieTrailer(id: Int) : Single<VideoResponse> {
+        return api.getMovieTrailer(id)
     }
 }

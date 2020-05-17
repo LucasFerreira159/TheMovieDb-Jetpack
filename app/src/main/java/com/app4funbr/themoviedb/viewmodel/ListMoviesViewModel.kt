@@ -3,7 +3,7 @@ package com.app4funbr.themoviedb.viewmodel
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.app4funbr.themoviedb.ServiceAPI
+import com.app4funbr.themoviedb.infrastructure.network.ServiceAPI
 import com.app4funbr.themoviedb.infrastructure.extensions.notifyObserver
 import com.app4funbr.themoviedb.model.Movie
 import com.app4funbr.themoviedb.model.PaginatedResponse
@@ -25,7 +25,8 @@ class ListMoviesViewModel(application: Application) : BaseViewModel(application)
     //5 minutos em nanosegundos
     private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
 
-    private val serviceAPI = ServiceAPI()
+    private val serviceAPI =
+        ServiceAPI()
     private val disposable = CompositeDisposable()
 
     val movies = MutableLiveData<MutableList<Movie>>()
