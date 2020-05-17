@@ -31,5 +31,3 @@ Este aplicativo possui comportamentos diferentes dependendo da orientação e ta
 * [GSON] (https://github.com/google/gson)
 
 * [RxJava] (https://github.com/ReactiveX/RxAndroid)
-
-* [RxJava] 
