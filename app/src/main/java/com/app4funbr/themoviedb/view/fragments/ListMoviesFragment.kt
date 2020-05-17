@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.app4funbr.themoviedb.R
 import com.app4funbr.themoviedb.infrastructure.util.NavUtils
+import com.app4funbr.themoviedb.infrastructure.util.Utils
 import com.app4funbr.themoviedb.view.adapter.MoviesAdapter
 import com.app4funbr.themoviedb.viewmodel.ListMoviesViewModel
 import kotlinx.android.synthetic.main.fragment_list_movies.*
@@ -51,7 +52,7 @@ class ListMoviesFragment : Fragment() {
 
         recycler_movies?.apply {
             layoutAnimation = animation
-            manager = GridLayoutManager(requireContext(), 3)
+            manager = Utils.getScreenSizeLayout(requireContext())
             layoutManager = manager
             adapter = moviesAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -130,19 +131,5 @@ class ListMoviesFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun runAnimation() {
-        val context = recycler_movies?.context
-        val controller = AnimationUtils.loadLayoutAnimation(
-            requireContext(),
-            R.anim.grid_layout_animation_from_bottom
-        )
-
-        recycler_movies?.apply {
-            layoutAnimation = controller
-            adapter?.notifyDataSetChanged()
-            scheduleLayoutAnimation()
-        }
     }
 }
