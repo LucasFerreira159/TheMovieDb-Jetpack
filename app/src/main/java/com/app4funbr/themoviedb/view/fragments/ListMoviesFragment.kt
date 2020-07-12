@@ -1,21 +1,15 @@
 package com.app4funbr.themoviedb.view.fragments
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.*
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.animation.LayoutAnimationController
 import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.app4funbr.themoviedb.R
-import com.app4funbr.themoviedb.infrastructure.util.NavUtils
 import com.app4funbr.themoviedb.infrastructure.util.Utils
 import com.app4funbr.themoviedb.view.adapter.MoviesAdapter
 import com.app4funbr.themoviedb.viewmodel.ListMoviesViewModel
@@ -45,7 +39,7 @@ class ListMoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(ListMoviesViewModel::class.java)
-        viewModel.refresh()
+        //viewModel.refresh()
 
         val resId = R.anim.grid_layout_animation_from_bottom
         val animation = AnimationUtils.loadLayoutAnimation(requireContext(), resId)
@@ -71,7 +65,7 @@ class ListMoviesFragment : Fragment() {
 
                     if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
                         page++
-                        viewModel.fetchOtherPagesFromRemote(page)
+                        //viewModel.fetchOtherPagesFromRemote(page)
                     }
                 }
             })
@@ -81,7 +75,7 @@ class ListMoviesFragment : Fragment() {
             recycler_movies?.visibility = View.GONE
             text_recycler_error?.visibility = View.GONE
             progress?.visibility = View.GONE
-            viewModel.refreshBypassCache()
+            //viewModel.refreshBypassCache()
             refresh_layout?.isRefreshing = false
         }
 
@@ -119,7 +113,7 @@ class ListMoviesFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        /*when (item.itemId) {
             R.id.action_settings -> {
                 view?.let {
                     Navigation.findNavController(it)
@@ -129,7 +123,7 @@ class ListMoviesFragment : Fragment() {
                         )
                 }
             }
-        }
+        }*/
         return super.onOptionsItemSelected(item)
     }
 }

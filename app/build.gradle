@@ -40,6 +40,7 @@ def rxJavaVersion = '2.1.1'
 def roomVersion = '2.2.3'
 def navVersion = '2.1.0-alpha05'
 def preferencesVersion = '1.0.0'
+def paging_version = "2.1.2"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -65,6 +66,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     implementation "com.android.support:palette-v7:$supportVersion"
     implementation "androidx.preference:preference:$preferencesVersion"
+    implementation "androidx.paging:paging-runtime:$paging_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

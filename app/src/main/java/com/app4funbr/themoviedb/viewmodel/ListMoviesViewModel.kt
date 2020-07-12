@@ -1,33 +1,44 @@
 package com.app4funbr.themoviedb.viewmodel
 
 import android.app.Application
-import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.app4funbr.themoviedb.infrastructure.network.ServiceAPI
+import androidx.paging.PagedList
 import com.app4funbr.themoviedb.infrastructure.extensions.notifyObserver
-import com.app4funbr.themoviedb.model.Movie
-import com.app4funbr.themoviedb.model.PaginatedResponse
 import com.app4funbr.themoviedb.infrastructure.helper.MovieDatabase
 import com.app4funbr.themoviedb.infrastructure.helper.SharedPreferencesHelper
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.app4funbr.themoviedb.infrastructure.network.ServiceAPI
+import com.app4funbr.themoviedb.model.Movie
+import com.app4funbr.themoviedb.repository.NetworkState
+import com.app4funbr.themoviedb.view.activity.MoviePageListRepository
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import java.lang.NumberFormatException
 
-class ListMoviesViewModel(application: Application) : BaseViewModel(application) {
+class ListMoviesViewModel(
+    application: Application,
+    private val movieRepository: MoviePageListRepository
+) : BaseViewModel(application) {
 
     private var prefHelper =
         SharedPreferencesHelper(
             getApplication()
         )
+
+    private val disposable = CompositeDisposable()
+
+    private val moviePagedList: LiveData<PagedList<Movie>> by  lazy {
+        movieRepository.fetchLiveMoviePagedList(disposable)
+    }
+
+    private val networkState: LiveData<NetworkState> by lazy {
+        movieRepository.getNetworkState()
+    }
+
     //5 minutos em nanosegundos
     private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
 
     private val serviceAPI =
         ServiceAPI()
-    private val disposable = CompositeDisposable()
 
     val movies = MutableLiveData<MutableList<Movie>>()
     val loading = MutableLiveData<Boolean>()
@@ -43,7 +54,7 @@ class ListMoviesViewModel(application: Application) : BaseViewModel(application)
         ) {
             fetchFromDatabase()
         } else {
-            fetchFromRemote()
+            //fetchFromRemote()
         }
     }
 
@@ -59,10 +70,10 @@ class ListMoviesViewModel(application: Application) : BaseViewModel(application)
     }
 
     fun refreshBypassCache() {
-        fetchFromRemote()
+        //fetchFromRemote()
     }
 
-    private fun fetchFromRemote() {
+    /*private fun fetchFromRemote() {
         loading.value = true
         disposable.add(
             serviceAPI.getPopularMovies(null)
@@ -85,7 +96,7 @@ class ListMoviesViewModel(application: Application) : BaseViewModel(application)
                     }
                 })
         )
-    }
+    }*/
 
     private fun fetchFromDatabase() {
         loading.value = true
@@ -120,7 +131,7 @@ class ListMoviesViewModel(application: Application) : BaseViewModel(application)
         prefHelper.saveUpdateTime(System.nanoTime())
     }
 
-    fun fetchOtherPagesFromRemote(page: Int? = null) {
+    /*fun fetchOtherPagesFromRemote(page: Int? = null) {
         disposable.add(
             serviceAPI.getPopularMovies(page)
                 .subscribeOn(Schedulers.newThread())
@@ -136,7 +147,7 @@ class ListMoviesViewModel(application: Application) : BaseViewModel(application)
                     }
                 })
         )
-    }
+    }*/
 
     private fun storeOtherPagesLocally(list: MutableList<Movie>) {
         launch {
@@ -154,6 +165,10 @@ class ListMoviesViewModel(application: Application) : BaseViewModel(application)
             movies.notifyObserver()
         }
         prefHelper.saveUpdateTime(System.nanoTime())
+    }
+
+    private fun listIsEmpty(): Boolean {
+        return moviePagedList.value?.isEmpty() ?: true
     }
 
     override fun onCleared() {
