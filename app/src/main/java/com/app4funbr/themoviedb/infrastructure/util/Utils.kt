@@ -3,8 +3,6 @@ package com.app4funbr.themoviedb.infrastructure.util
 import android.content.Context
 import android.content.res.Configuration
 import android.util.DisplayMetrics
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app4funbr.themoviedb.model.Movie
 import com.app4funbr.themoviedb.model.enum.Genre
@@ -16,7 +14,7 @@ object Utils {
         val genre: List<Int> = movie.genre!!
         genre?.let { genre ->
             for (i in genre) {
-                when(i) {
+                when (i) {
                     Genre.Acao.genre -> builder.append("Ação ")
                     Genre.Aventura.genre -> builder.append("Aventura ")
                     Genre.Comedia.genre -> builder.append("Comédia ")
@@ -41,7 +39,7 @@ object Utils {
         return builder.toString()
     }
 
-    fun getScreenSizeLayout(context: Context): GridLayoutManager {
+    fun getScreenSizeLayout(context: Context): Int {
         val metrics = DisplayMetrics()
 
         val yInches = metrics.heightPixels / metrics.ydpi
@@ -50,22 +48,20 @@ object Utils {
 
         var mLayoutManager: RecyclerView.LayoutManager
 
-        if (diagonalInches >= 6.5) {
+        return if (diagonalInches >= 6.5) {
             //Verifica qual a orientação de tela, se for vertical irá gerar grid com 2 colunas, caso contrário 4
             if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                mLayoutManager = GridLayoutManager(context, 3)
+                3
             } else {
-                mLayoutManager = GridLayoutManager(context, 4)
+                4
             }
         } else {
             //Verifica qual a orientação de tela, se for vertical irá gerar grid com 2 colunas, caso contrário 4
             if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                mLayoutManager = GridLayoutManager(context, 3)
+                3
             } else {
-                mLayoutManager = GridLayoutManager(context, 5)
+                5
             }
         }
-
-        return mLayoutManager
     }
 }

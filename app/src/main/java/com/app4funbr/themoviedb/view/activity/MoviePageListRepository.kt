@@ -20,6 +20,8 @@ class MoviePageListRepository(private val serviceAPI: ServiceAPI) {
     fun fetchLiveMoviePagedList(compositeDisposable: CompositeDisposable)
             : LiveData<PagedList<Movie>> {
 
+        moviesDataSourceFactory = MovieDatasourceFactory(serviceAPI, compositeDisposable)
+
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setPageSize(POST_PER_PAGE)

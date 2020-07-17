@@ -16,35 +16,33 @@ import kotlinx.coroutines.launch
 
 class ListMoviesViewModel(
     application: Application,
-    private val movieRepository: MoviePageListRepository
+    private val movieRepository: MoviePageListRepository,
+    private val serviceAPI: ServiceAPI
 ) : BaseViewModel(application) {
 
-    private var prefHelper =
+    /*private var prefHelper =
         SharedPreferencesHelper(
             getApplication()
-        )
+        )*/
 
     private val disposable = CompositeDisposable()
 
-    private val moviePagedList: LiveData<PagedList<Movie>> by  lazy {
+    val moviePagedList: LiveData<PagedList<Movie>> by  lazy {
         movieRepository.fetchLiveMoviePagedList(disposable)
     }
 
-    private val networkState: LiveData<NetworkState> by lazy {
+    val networkState: LiveData<NetworkState> by lazy {
         movieRepository.getNetworkState()
     }
 
     //5 minutos em nanosegundos
     private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
 
-    private val serviceAPI =
-        ServiceAPI()
-
     val movies = MutableLiveData<MutableList<Movie>>()
     val loading = MutableLiveData<Boolean>()
     val loadError = MutableLiveData<Boolean>()
 
-    fun refresh() {
+    /*fun refresh() {
         loading.value = true
         checkCacheDuration()
         val updateTime = prefHelper.getUpdateTime()
@@ -67,7 +65,7 @@ class ListMoviesViewModel(
         } catch (e: NumberFormatException) {
             e.printStackTrace()
         }
-    }
+    }*/
 
     fun refreshBypassCache() {
         //fetchFromRemote()
@@ -98,7 +96,7 @@ class ListMoviesViewModel(
         )
     }*/
 
-    private fun fetchFromDatabase() {
+   /* private fun fetchFromDatabase() {
         loading.value = true
         launch {
             val movies = MovieDatabase(
@@ -129,7 +127,7 @@ class ListMoviesViewModel(
             moviesRetrieved(list)
         }
         prefHelper.saveUpdateTime(System.nanoTime())
-    }
+    }*/
 
     /*fun fetchOtherPagesFromRemote(page: Int? = null) {
         disposable.add(
@@ -149,7 +147,7 @@ class ListMoviesViewModel(
         )
     }*/
 
-    private fun storeOtherPagesLocally(list: MutableList<Movie>) {
+    /*private fun storeOtherPagesLocally(list: MutableList<Movie>) {
         launch {
             val dao = MovieDatabase(
                 getApplication()
@@ -165,9 +163,9 @@ class ListMoviesViewModel(
             movies.notifyObserver()
         }
         prefHelper.saveUpdateTime(System.nanoTime())
-    }
+    }*/
 
-    private fun listIsEmpty(): Boolean {
+    fun listIsEmpty(): Boolean {
         return moviePagedList.value?.isEmpty() ?: true
     }
 

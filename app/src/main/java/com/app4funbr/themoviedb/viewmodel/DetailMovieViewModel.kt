@@ -33,7 +33,7 @@ class DetailMovieViewModel(application: Application): BaseViewModel(application)
 
     fun fetchMovieTrailer(id: Int) {
         disposable.add(
-            serviceAPI.getMovieTrailer(id)
+            serviceAPI.api.getMovieTrailer(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<VideoResponse>() {
