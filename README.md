@@ -1,4 +1,4 @@
-# The Movie DB - Challange FastShop
+# The Movie DB - Jetpack
 Plataforma: Android<br>
 Versão: 1.0
 
